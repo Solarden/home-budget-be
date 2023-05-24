@@ -7,10 +7,10 @@ from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 
 
-class TransferRecipient(Base):
-    """Transfer Recipient model."""
+class TransferContact(Base):
+    """Transfer Contact model."""
 
-    __tablename__ = "transfer_recipients"
+    __tablename__ = "transfer_contacts"
 
     id = Column(UUID(as_uuid=True), unique=True, nullable=False, blank=False, default=uuid.uuid4)
     first_name = Column(String, nullable=False, blank=False)
@@ -22,4 +22,4 @@ class TransferRecipient(Base):
     city = Column(String)
     account_number = Column(String, nullable=False, blank=False)
 
-    user = relationship("User", back_populates="transfer_recipients")
+    user = relationship("User", back_populates="transfer_contacts")
