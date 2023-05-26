@@ -1,7 +1,5 @@
-from decouple import Config
+from decouple import config
 
-env = Config(".env")
-
-PROJECT_NAME = env("PROJECT_NAME", default="Home Budget API")
-DEBUG = env("DEBUG", cast=bool, default=False)
-DATABASE_URL = env("DATABASE_URL")
+PROJECT_NAME = config("PROJECT_NAME", default="Home Budget API")
+DEBUG = config("DEBUG", cast=bool, default=False)
+DATABASE_URL = config("DATABASE_URL")
