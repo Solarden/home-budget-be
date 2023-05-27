@@ -1,16 +1,16 @@
 # pylint: skip-file
-"""empty message
+"""initial migration
 
-Revision ID: 7d0f9a2787bd
+Revision ID: f8512e054e4b
 Revises:
-Create Date: 2023-05-25 22:05:00.834142
+Create Date: 2023-05-27 15:44:36.336537
 
 """
 import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = "7d0f9a2787bd"
+revision = "f8512e054e4b"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -35,7 +35,7 @@ def upgrade() -> None:
     op.create_table(
         "expense",
         sa.Column("id", sa.UUID(), nullable=False),
-        sa.Column("user_id", sa.Integer(), nullable=False),
+        sa.Column("user_id", sa.UUID(), nullable=False),
         sa.Column("name", sa.String(length=255), nullable=False),
         sa.Column("amount", sa.Integer(), nullable=True),
         sa.Column("date", sa.DateTime(), nullable=True),
@@ -47,7 +47,7 @@ def upgrade() -> None:
     op.create_table(
         "loan",
         sa.Column("id", sa.UUID(), nullable=False),
-        sa.Column("user_id", sa.Integer(), nullable=False),
+        sa.Column("user_id", sa.UUID(), nullable=False),
         sa.Column("name", sa.String(length=255), nullable=False),
         sa.Column("loan_type", sa.String(length=255), nullable=True),
         sa.Column("instalments", sa.String(length=255), nullable=True),
@@ -66,7 +66,7 @@ def upgrade() -> None:
     op.create_table(
         "transfer_contact",
         sa.Column("id", sa.UUID(), nullable=False),
-        sa.Column("user_id", sa.Integer(), nullable=False),
+        sa.Column("user_id", sa.UUID(), nullable=False),
         sa.Column("first_name", sa.String(length=255), nullable=False),
         sa.Column("last_name", sa.String(length=255), nullable=False),
         sa.Column("email", sa.String(length=255), nullable=True),
@@ -81,6 +81,7 @@ def upgrade() -> None:
     op.create_table(
         "user_bank_account",
         sa.Column("id", sa.UUID(), nullable=False),
+        sa.Column("user_id", sa.UUID(), nullable=False),
         sa.Column("number", sa.String(length=255), nullable=False),
         sa.Column("name", sa.String(length=255), nullable=False),
         sa.Column("bank", sa.String(length=255), nullable=False),
@@ -89,17 +90,16 @@ def upgrade() -> None:
         sa.Column("currency", sa.String(length=255), nullable=False),
         sa.Column("iban", sa.String(length=255), nullable=True),
         sa.Column("swift", sa.String(length=255), nullable=True),
-        sa.Column("user_id", sa.Integer(), nullable=False),
         sa.ForeignKeyConstraint(["user_id"], ["user.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_table(
         "transfer",
         sa.Column("id", sa.UUID(), nullable=False),
-        sa.Column("user_id", sa.Integer(), nullable=False),
-        sa.Column("user_bank_account_id", sa.Integer(), nullable=False),
-        sa.Column("transfer_contact_id", sa.Integer(), nullable=False),
-        sa.Column("loan_id", sa.Integer(), nullable=False),
+        sa.Column("user_id", sa.UUID(), nullable=False),
+        sa.Column("user_bank_account_id", sa.UUID(), nullable=False),
+        sa.Column("transfer_contact_id", sa.UUID(), nullable=False),
+        sa.Column("loan_id", sa.UUID(), nullable=False),
         sa.Column("name", sa.String(length=255), nullable=False),
         sa.Column("amount", sa.Integer(), nullable=True),
         sa.Column("currency", sa.String(length=255), nullable=True),

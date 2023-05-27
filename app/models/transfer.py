@@ -20,10 +20,14 @@ class Transfer(Base):
     __tablename__ = "transfer"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
-    user_bank_account_id = Column(Integer, ForeignKey("user_bank_account.id", ondelete="CASCADE"), nullable=False)
-    transfer_contact_id = Column(Integer, ForeignKey("transfer_contact.id", ondelete="CASCADE"), nullable=False)
-    loan_id = Column(Integer, ForeignKey("loan.id", ondelete="CASCADE"), nullable=False)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
+    user_bank_account_id = Column(
+        UUID(as_uuid=True), ForeignKey("user_bank_account.id", ondelete="CASCADE"), nullable=False
+    )
+    transfer_contact_id = Column(
+        UUID(as_uuid=True), ForeignKey("transfer_contact.id", ondelete="CASCADE"), nullable=False
+    )
+    loan_id = Column(UUID(as_uuid=True), ForeignKey("loan.id", ondelete="CASCADE"), nullable=False)
     name = Column(String(255), nullable=False)
     amount = Column(Integer)
     currency = Column(String(255))
@@ -46,4 +50,4 @@ class Transfer(Base):
         backref=backref("transfer_contacts", uselist=False, passive_deletes=True),
         foreign_keys=[transfer_contact_id],
     )
-    loan = relationship("User", backref=backref("Loan", uselist=False, passive_deletes=True), foreign_keys=[loan_id])
+    loan = relationship("Loan", backref=backref("loans", uselist=False, passive_deletes=True), foreign_keys=[loan_id])

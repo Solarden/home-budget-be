@@ -10,7 +10,7 @@ up:
 
 .PHONY: db-migrate
 db-migrate:
-	@docker exec -it home-budget-backend alembic -c alembic.ini revision --autogenerate
+	@docker exec -it home-budget-backend alembic -c alembic.ini revision --autogenerate -m "$(m)"
 
 .PHONY: db-upgrade
 db-upgrade:
