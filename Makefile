@@ -8,6 +8,14 @@ build:
 up:
 	@docker-compose -f docker-compose.yml up
 
+.PHONY: down
+down:
+	@docker-compose -f docker-compose.yml down
+
+.PHONY: test
+test:
+	@docker exec -it home-budget-backend pytest -v
+
 .PHONY: db-migrate
 db-migrate:
 	@docker exec -it home-budget-backend alembic -c alembic.ini revision --autogenerate -m "$(m)"
